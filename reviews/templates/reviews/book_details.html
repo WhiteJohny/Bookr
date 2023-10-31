@@ -1,0 +1,41 @@
+{% extends 'reviews/base.html' %}
+
+{% block content %}
+    <br>
+    <h2>Book Details</h2>
+    <hr>
+    <span class="text-info">Title: </span> <span>{{ book.title }}</span>
+    <br>
+    <span class="text-info">Publisher: </span><span>{{ book.publisher }}</span>
+    <br>
+    <span class="text-info">Publication Date: </span><span>{{ book.publication_date }}</span>
+    <br>
+    <span class="text-info">Rating: </span><span class="badge badge-primary badge-pill">{{ book_rating }}</span>
+    {% if book_rating is null %}
+        <span class="text-secondary">Provide a rating and write the first review for this book.</span>
+    {% endif %}
+    <br>
+    {% if not reviews %}
+        <hr>
+        <h3>Write the first review for this book</h3>
+    {% else %}
+        <hr>
+        <h3>Reviews Comments</h3>
+        <ul>
+            {% for review in reviews %}
+            <li>
+                <span class="text-info">Review comment: </span><span class="badge badge-primary badge-pill">{{ review.content }}</span>
+                <br>
+                 <span class="text-info">Created on: </span><span class="badge badge-primary badge-pill">{{ review.date_created }}</span>
+                <br>
+                <span class="text-info">Modified on: </span><span class="badge badge-primary badge-pill">{{ review.date_edited }}</span>
+                <br>
+                <span class="text-info">Rating: </span><span class="badge badge-primary badge-pill">{{ review.rating }}</span>
+                <br>
+                <span class="text-info">Creator: </span><span class="badge badge-primary badge-pill">{{ review.creator }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}
