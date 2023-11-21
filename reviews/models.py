@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib import auth
 
+
 class Publisher(models.Model):
     """ A company that publishes books."""
     name = models.CharField(
@@ -38,7 +39,8 @@ class Book(models.Model):
     contributor = models.ManyToManyField('Contributor', through="BookContributor")
 
     def __str__(self):
-        return self.title
+        return f"{self.title} ({self.isbn})"
+
 
 class Contributor(models.Model):
     """A contributor to a book, e.g. author, editor, co-author."""
@@ -54,8 +56,14 @@ class Contributor(models.Model):
         help_text="The contact email for the contributor."
     )
 
+    def initialled_name(self):
+        """ self.first_names='Jerome David', self.last_names='Salinger' => 'Salinger, JD' """
+        initials = ''.join([name[0] for name in str(self.first_names).split(' ')])
+        return "{}, {}".format(self.last_names, initials)
+
     def __str__(self):
-        return self.first_names
+        return self.initialled_name()
+
 
 class BookContributor(models.Model):
     class ContributionRole(models.TextChoices):
@@ -76,6 +84,7 @@ class BookContributor(models.Model):
         verbose_name="The role this contributor had in the book.",
         choices=ContributionRole.choices
     )
+
 
 class Review(models.Model):
     content = models.TextField(
@@ -101,3 +110,6 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         help_text="The book that this review is for."
     )
+
+    def __str__(self):
+        return "{} - {}".format(self.creator.username, self.book.title)

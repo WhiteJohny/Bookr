@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
-from .models import Book
-from .utils import average_rating
+from reviews.models import Book
+from reviews.utils import average_rating
 
 
 def index(request):
