@@ -5,7 +5,7 @@ from reviews.utils import average_rating
 
 
 def index(request):
-    return render(request, "reviews/base.html")
+    return render(request, "base.html")
 
 
 def book_search(request):
@@ -15,9 +15,9 @@ def book_search(request):
                   {"search_text": search_text})
 
 
-def book_list(request):
+def books_list(request):
     books = Book.objects.all()
-    book_list = []
+    books_list = []
 
     for book in books:
         reviews = book.review_set.all()
@@ -29,19 +29,19 @@ def book_list(request):
             book_rating = None
             number_of_reviews = 0
 
-        book_list.append({'book': book,
-                          'book_rating': book_rating,
-                          'number_of_reviews': number_of_reviews})
+        books_list.append({'book': book,
+                           'book_rating': book_rating,
+                           'number_of_reviews': number_of_reviews})
 
     context = {
-        'book_list': book_list
+        'books_list': books_list
     }
 
-    return render(request, 'reviews/book_list.html', context)
+    return render(request, 'reviews/books_list.html', context)
 
 
-def book_details(request, id):
-    book = Book.objects.get(id=id)
+def book_details(request, pk):
+    book = get_object_or_404(Book, pk=pk)
     reviews = book.review_set.all()
 
     if reviews:
@@ -56,4 +56,3 @@ def book_details(request, id):
     }
 
     return render(request, 'reviews/book_details.html', context)
-

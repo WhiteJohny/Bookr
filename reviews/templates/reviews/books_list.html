@@ -2,7 +2,7 @@
 
 {% block content %}
 <ul class="list-group">
-  {% for item in book_list %}
+  {% for item in books_list %}
   <li class="list-group-item">
       <span class="text-info">Title: </span> <span>{{ item.book.title }}</span>
       <br>
@@ -18,7 +18,7 @@
       <span class="text-secondary">Provide a rating and write the first review for this book.</span>
       <br>
       {% endif %}
-      <a class="btn btn-primary btn-sm active" role="button" aria-pressed="true" href="/book/{{ item.book.id }}/">Reviews</a></li>
+      <a class="btn btn-primary btn-sm active" role="button" aria-pressed="true" href="/book/{{ item.book.id }}/">Reviews</a>
   </li>
   {% endfor %}
 </ul>
