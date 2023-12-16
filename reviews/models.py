@@ -36,7 +36,8 @@ class Book(models.Model):
         Publisher,
         on_delete=models.CASCADE
     )
-    contributor = models.ManyToManyField('Contributor', through="BookContributor")
+    contributor = models.ManyToManyField('Contributor',
+                                         through="BookContributor")
 
     def __str__(self):
         return f"{self.title} ({self.isbn})"
